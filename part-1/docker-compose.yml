@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+    jupyter-server:
+        image: dl-jupyter
+        init: true
+        build:
+            context: ./
+            dockerfile: jupyter.Dockerfile
+        device_requests:
+            - capabilities:
+                - "gpu"
+        env_file: ./.env
+        ports:
+            - ${JUPYTER_PORT}:${JUPYTER_PORT}
+        volumes:
+            - ${ROOT_DIR}:/jupyter
+        environment:
+            - NVIDIA_VISIBLE_DEVICES=all
+        command:
+            [
+                "jupyter",
+                "notebook",
+                "--ip=*",
+                "--port=${JUPYTER_PORT}",
+                "--allow-root",
+                "--notebook-dir=${JUPYTER_DIR}",
+                '--NotebookApp.token=${JUPYTER_TOKEN}'
+            ]
+            
+    tensorboard:
+        image: dl-tensorboard
+        build:
+            context: ./
+            dockerfile: tensorboard.Dockerfile
+        ports:
+            - ${TENSORBOARD_PORT}:${TENSORBOARD_PORT}
+        volumes:
+            - ${ROOT_DIR}:/jupyter
+        command:
+            [
+                "tensorboard",
+                "--logdir=${TENSORBOARD_DIR}",
+                "--port=${TENSORBOARD_PORT}",
+                "--bind_all",
+            ]
