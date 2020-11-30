@@ -6,9 +6,6 @@ services:
         build:
             context: ./
             dockerfile: jupyter.Dockerfile
-        device_requests:
-            - capabilities:
-                - "gpu"
         env_file: ./.env
         ports:
             - ${JUPYTER_PORT}:${JUPYTER_PORT}
@@ -26,6 +23,13 @@ services:
                 "--notebook-dir=${JUPYTER_DIR}",
                 '--NotebookApp.token=${JUPYTER_TOKEN}'
             ]
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                    - 'driver': 'nvidia'
+                      'count': 1
+                      'capabilities': ['gpu', 'utility']
             
     tensorboard:
         image: dl-tensorboard
