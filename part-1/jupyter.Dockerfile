@@ -7,4 +7,4 @@ RUN pip3 -q install pip --upgrade
 RUN pip3 install jupyter numpy pandas torch torchvision tensorboardX
 
 FROM jupyter-base
-RUN pip3 install transformers barbar
+RUN pip3 install transformers barbar matplotlib
