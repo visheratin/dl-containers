@@ -141,7 +141,7 @@ def download_file(file_url, file_path):
                         (file_path, counter / MEGABYTES, length / MEGABYTES))
                     progress_bar.progress(min(counter / length, 1.0))
     except Exception as e:
-        print(e)
+        st.error(e)
     finally:
         if weights_warning is not None:
             weights_warning.empty()
