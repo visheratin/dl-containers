@@ -26,19 +26,19 @@ DATA_ITEMS = {
     }
 }
 
-DATA_DIR = "data"
+DATA_DIR = "./data"
 
-def main(data_dir: str):
+def main():
     os.makedirs(DATA_DIR, 0o666, exist_ok=True)
     for k in DATA_ITEMS:
-        fpath = os.path.join(data_dir, DATA_ITEMS[k]["fname"])
+        fpath = os.path.join(DATA_DIR, DATA_ITEMS[k]["fname"])
         download_file(DATA_ITEMS[k]["url"], fpath)
     st.title('Similar news searcher')
     title = st.text_area('Insert title of the target news')
     abstract = st.text_area('Insert abstract of the target news')
     submit = st.button('Get similar news')
     if submit:
-        items = process(title, abstract, data_dir)
+        items = process(title, abstract, DATA_DIR)
         for item in items:
             st.subheader(item.title)
             st.write(item.abstract)
