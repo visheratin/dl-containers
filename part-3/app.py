@@ -26,7 +26,7 @@ DATA_ITEMS = {
     }
 }
 
-DATA_DIR = "./data"
+DATA_DIR = "."
 
 def main():
     os.makedirs(DATA_DIR, 0o666, exist_ok=True)
